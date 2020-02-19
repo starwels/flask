@@ -6,9 +6,8 @@ class Purchase(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(80))
-    value = db.Column(db.String(11))
+    value = db.Column(db.Float())
     date = db.Column(db.DateTime())
-    cpf = db.Column(db.String(11))
     status = db.Column(db.String(20), default='Em validação')
 
     reseller_cpf = db.Column(db.String(11), db.ForeignKey('resellers.cpf'))
@@ -27,7 +26,7 @@ class Purchase(db.Model):
             'code': self.code,
             'value': self.value,
             'date': self.date,
-            'cpf': self.cpf,
+            'reseller_cpf': self.reseller_cpf,
             'status': self.status,
         }
         return purchase
@@ -37,25 +36,25 @@ class Purchase(db.Model):
         code = json_post.get('code')
         value = json_post.get('value')
         date = json_post.get('date')
-        cpf = json_post.get('cpf')
-        status = json_post.get('status')
+        cpf = json_post.get('reseller_cpf')
+
+        reseller_cpf = cpf.replace('-', '').replace('.', '')
+
+        if reseller_cpf == '15350946056':
+            status = 'Aprovado'
+        else:
+            status = 'Em validação'
 
         purchase = Purchase(
             code=code,
             value=value,
             date=date,
-            cpf=cpf,
+            reseller_cpf=reseller_cpf,
             status=status
         )
         return purchase
 
     def save_to_db(self):
-        if self.cpf == '15350946056':
-            self.status = 'Aprovado'
-
-        self.cpf.replace('.', '')
-        self.cpf.replace('-', '')
-
         db.session.add(self)
         db.session.commit()
 

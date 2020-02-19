@@ -30,9 +30,11 @@ class Reseller(db.Model):
     @staticmethod
     def from_json(json_post):
         name = json_post.get('name')
-        cpf = json_post.get('cpf')
+        cpf_temp = json_post.get('cpf')
         email = json_post.get('email')
         password = json_post.get('password')
+
+        cpf = cpf_temp.replace('-', '').replace('.', '')
 
         reseller = Reseller(
             name=name,
@@ -47,8 +49,5 @@ class Reseller(db.Model):
         db.session.commit()
 
     def save_to_db(self):
-        self.cpf.replace('.', '')
-        self.cpf.replace('-', '')
-
         db.session.add(self)
         db.session.commit()

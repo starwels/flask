@@ -10,7 +10,7 @@ def get_purchases():
     current_app.logger.debug('This is a debug log')
     purchases = Purchase.query.all()
     return jsonify({
-        'purchases': purchases
+        'purchases': [purchase.to_json() for purchase in purchases]
     })
 
 
@@ -18,14 +18,25 @@ def get_purchases():
 def get_purchase(id):
     purchase = Purchase.query.get_or_404(id)
     current_app.logger.info('Retrieving purchase {}'.format(id))
-    return purchase
+    return jsonify(purchase.to_json())
 
 
 @api.route('/purchases/', methods=['POST'])
 def new_purchase():
     purchase = Purchase.from_json(request.json)
     current_app.logger.info('Creating new purchase')
-    db.session.add(purchase)
-    db.session.commit()
-    return purchase, 201
+    purchase.save_to_db()
+    return jsonify(purchase.to_json()), 201
 
+
+@api.route('/purchases/<int:id>', methods=['PUT'])
+def edit_purchase(id):
+    purchase = Purchase.query.get_or_404(id)
+    purchase.code = request.json.get('code')
+    purchase.value = request.json.get('value')
+    purchase.date = request.json.get('date')
+    purchase.reseller_cpf = request.json.get('reseller_cpf')
+
+    current_app.logger.info('Editing purchase {}'.format(id))
+    purchase.save_to_db()
+    return jsonify(purchase.to_json())

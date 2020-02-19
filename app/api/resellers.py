@@ -25,13 +25,12 @@ def get_reseller(id):
 def new_reseller():
     reseller = Reseller.from_json(request.json)
     current_app.logger.info('Creating new reseller')
-    db.session.add(reseller)
-    db.session.commit()
+    reseller.save_to_db()
     return jsonify(reseller.to_json()), 201
 
 
 @api.route('/resellers/<int:id>', methods=['PUT'])
-def edit_story(id):
+def edit_reseller(id):
     reseller = Reseller.query.get_or_404(id)
     reseller.name = request.json.get('name')
     reseller.cpf = request.json.get('cpf')
