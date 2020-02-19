@@ -18,14 +18,14 @@ class Reseller(db.Model):
         return cls.query.filter_by(cpf=cpf).first()
 
     def to_json(self):
-        json_story = {
+        reseller = {
             'id': self.id,
             'name': self.name,
             'cpf': self.cpf,
             'email': self.email,
             'password': self.password,
         }
-        return json_story
+        return reseller
 
     @staticmethod
     def from_json(json_post):
@@ -41,3 +41,14 @@ class Reseller(db.Model):
             password=password
         )
         return reseller
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def save_to_db(self):
+        self.cpf.replace('.', '')
+        self.cpf.replace('-', '')
+
+        db.session.add(self)
+        db.session.commit()
