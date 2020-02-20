@@ -21,7 +21,7 @@ export FLASK_ENV=app.py
 
 #### Database
 
-1 - Criar o Database
+1 - Criar o Database colocado no arquivo .env <DATABASE_NAME>
 
 2 - Rodar o comando
 ```
