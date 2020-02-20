@@ -21,7 +21,7 @@ export FLASK_ENV=app.py
 
 #### Database
 
-1 - Criar o Database colocado no arquivo .env <DATABASE_NAME>
+1 - Criar o Database colocado no arquivo .env \DATABASE_NAME\
 
 2 - Rodar o comando
 ```
@@ -39,27 +39,27 @@ flask run
 #### POST /auth
 
 headers: { "Content-Type": "application/json" }
-body: { "cpf": "<cpf>", "password": "<password>" }
+body: { "cpf": "\cpf\", "password": "\password\" }
 
 ### Compras
 #### GET /purchases
-headers: { "Authorization": "JWT <token>"}
+headers: { "Authorization": "JWT \token\"}
 
 #### POST /purchases
-headers: { "Content-Type": "application/json", "Authorization": "JWT <token>" }
-body: { "code": "<code>", "value": "<value>","date": "<date>","reseller_cpf": "<reseller_cpf>" }
+headers: { "Content-Type": "application/json", "Authorization": "JWT \token\" }
+body: { "code": "", "value": "","date": "","reseller_cpf": "" }
 
 ### Revendedores
 #### GET /resellers
-headers: { "Authorization": "JWT <token>"}
+headers: { "Authorization": "JWT \token\"}
 
 #### POST /resellers
-headers: { "Content-Type": "application/json", "Authorization": "JWT <token>" }
-body: { "name": "<name>", "cpf": "<cpf>","email": "<email>","password": "<password>"  }
+headers: { "Content-Type": "application/json", "Authorization": "JWT \token\" }
+body: { "name": "\name\", "cpf": "\cpf\","email": "\email\","password": "\password\"  }
 
 ### Cashbacks
-#### GET /cashbacks/<cpf>
-headers: { "Authorization": "JWT <token>" }
+#### GET /cashbacks/\cpf\
+headers: { "Authorization": "JWT \token\" }
 
 ## Logs
 
