@@ -47,7 +47,7 @@ headers: { "Authorization": "JWT <token>"}
 
 #### POST /purchases
 headers: { "Content-Type": "application/json", "Authorization": "JWT <token>" }
-body: { "code": "<code>", "value": "<value>","date": "<date>","reseller_cpf": "<reseller_cpf>"  }
+body: { "code": "<code>", "value": "<value>","date": "<date>","reseller_cpf": "<reseller_cpf>" }
 
 ### Revendedores
 #### GET /resellers
