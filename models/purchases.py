@@ -1,4 +1,5 @@
 from app import db
+from models.resellers import Reseller
 
 
 class Purchase(db.Model):
@@ -20,14 +21,29 @@ class Purchase(db.Model):
     def find_by_cpf(cls, cpf):
         return cls.query.filter_by(cpf=cpf).first()
 
+    @classmethod
+    def find_by_reseller(cls, id):
+        cpf = Reseller.find_by_id(id).cpf
+        return cls.query.filter_by(reseller_cpf=cpf)
+
     def to_json(self):
+        if self.value <= 1000:
+            cashback_percent = '10%'
+            cashback = self.value * 0.1
+        elif self.value <= 1500:
+            cashback_percent = '15%'
+            cashback = self.value * 0.15
+        else:
+            cashback_percent = '20%'
+            cashback = self.value * 0.2
+
         purchase = {
-            'id': self.id,
             'code': self.code,
             'value': self.value,
             'date': self.date,
-            'reseller_cpf': self.reseller_cpf,
-            'status': self.status,
+            '% cashback': cashback_percent,
+            'cashback': cashback,
+            'status': self.status
         }
         return purchase
 

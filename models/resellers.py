@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy import or_
 
 
 class Reseller(db.Model):
@@ -16,6 +17,14 @@ class Reseller(db.Model):
     @classmethod
     def find_by_cpf(cls, cpf):
         return cls.query.filter_by(cpf=cpf).first()
+
+    @classmethod
+    def find_by_cpf_and_email(cls, cpf, email):
+        return cls.query.filter(or_(Reseller.cpf==cpf, Reseller.email==email)).first()
+
+    @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
 
     def to_json(self):
         reseller = {
