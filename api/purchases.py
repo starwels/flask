@@ -9,7 +9,6 @@ from flask_jwt import jwt_required, current_identity
 def get_purchases():
     current_app.logger.info(current_identity)
     current_app.logger.info('Retrieving all purchases')
-    current_app.logger.debug('This is a debug log')
     purchases = Purchase.query.all()
     return jsonify({
         'purchases': [purchase.to_json() for purchase in purchases]
